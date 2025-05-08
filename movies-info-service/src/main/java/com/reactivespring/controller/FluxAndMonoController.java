@@ -9,6 +9,6 @@ public class FluxAndMonoController {
 
     @GetMapping("/flux")
     public Flux<Integer> flux(){
-        return Flux.just(1,2,3);
+        return Flux.just(1,2,3).log();
     }
 }
