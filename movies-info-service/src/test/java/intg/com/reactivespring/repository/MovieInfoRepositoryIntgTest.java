@@ -68,4 +68,57 @@ class MovieInfoRepositoryIntgTest {
                 })
                 .verifyComplete();
     }
+
+    @Test
+    void saveMovieInfo(){
+        //given
+        var newMovieInfo = new MovieInfo(null, "Life of Pi",
+                2005, List.of("Suraj Sharma", "Rafe Spall"), LocalDate.parse("2012-09-28"));
+
+        //when
+        var movieInfoMono = movieInfoRepository.save(newMovieInfo).log();
+
+
+        //then
+        StepVerifier.create(movieInfoMono)
+                .assertNext(movieInfo -> {
+                    assertNotNull(movieInfo.getMovieInfoId());
+                    assertEquals("Life of Pi", movieInfo.getMovieName());
+                })
+                .verifyComplete();
+    }
+
+    @Test
+    void updateMovieInfo(){
+        //given
+        var newMovieInfo = movieInfoRepository.findById("abc").block();
+        assert newMovieInfo != null;
+        newMovieInfo.setYear(2025);
+
+        //when
+        var movieInfoMono = movieInfoRepository.save(newMovieInfo).log();
+
+
+        //then
+        StepVerifier.create(movieInfoMono)
+                .assertNext(movieInfo -> {
+                    assertEquals(2025, movieInfo.getYear());
+                })
+                .verifyComplete();
+    }
+
+    @Test
+    void deleteMovieInfo(){
+        //given
+
+        //when
+        var movieInfoMono = movieInfoRepository.deleteById("abc").block();
+        var movieInfoFlux = movieInfoRepository.findAll().log();
+
+
+        //then
+        StepVerifier.create(movieInfoFlux)
+                .expectNextCount(2)
+                .verifyComplete();
+    }
 }
