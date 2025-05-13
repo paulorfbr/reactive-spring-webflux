@@ -101,11 +101,14 @@ class MoviesInfoControllerIntgTest {
                 .exchange()
                 .expectStatus()
                 .is2xxSuccessful()
-                .expectBody(MovieInfo.class)
+                .expectBody()
+                .jsonPath("$.movieName").isEqualTo("Dark Knight Rises")
+                /*
                 .consumeWith(movieInfoEntityExchangeResult -> {
                     var movieInfo = movieInfoEntityExchangeResult.getResponseBody();
                     assertNotNull(movieInfo);
-                });
+                })*/
+                ;
 
         //then
     }
