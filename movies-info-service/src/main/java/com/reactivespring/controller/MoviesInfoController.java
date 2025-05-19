@@ -5,8 +5,10 @@ import com.reactivespring.service.MovieInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Mono;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/v1")
@@ -27,7 +29,18 @@ public class MoviesInfoController {
 
     @PostMapping("/movieinfos")
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<MovieInfo> addMovieInfo(@RequestBody MovieInfo movieInfo){
+    public Mono<MovieInfo> addMovieInfo(@RequestBody @Valid MovieInfo movieInfo){
         return movieInfoService.addMovieInfo(movieInfo);
+    }
+
+    @PutMapping("/movieinfos/{id}")
+    public Mono<MovieInfo> updateMovieInfo(@PathVariable String id, @RequestBody @Valid MovieInfo movieInfo){
+        return movieInfoService.updateMovieInfo(id, movieInfo);
+    }
+
+    @DeleteMapping("/movieinfos/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public Mono<Void> deleteMovieInfo(@PathVariable String id){
+        return movieInfoService.deleteMovieInfo(id).log();
     }
 }
