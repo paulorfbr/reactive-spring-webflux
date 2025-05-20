@@ -114,6 +114,22 @@ class MoviesInfoControllerIntgTest {
     }
 
     @Test
+    void getMovieInfoById_invalidId() {
+
+        //when
+        String movieInfoId = "def";
+        webTestClient
+                .get()
+                .uri(MOVIES_INFO_URL+"/{id}",movieInfoId)
+                .exchange()
+                .expectStatus()
+                .isNotFound();
+        ;
+
+        //then
+    }
+
+    @Test
     void updateMovieInfo() {
 
         //when
@@ -136,6 +152,25 @@ class MoviesInfoControllerIntgTest {
                     assert updatedMovieInfo.getMovieInfoId()!=null;
                     assertEquals("Test1", updatedMovieInfo.getMovieName());
                 });
+
+        //then
+    }
+
+    @Test
+    void updateMovieInfo_invalidId() {
+
+        //when
+        String movieInfoId = "def";
+        var movieInfo = new MovieInfo(null, "Test1",
+                2005, List.of("Christian Bale", "Michael Cane"), LocalDate.parse("2005-06-15"));
+
+        webTestClient
+                .put()
+                .uri(MOVIES_INFO_URL+"/{id}",movieInfoId)
+                .bodyValue(movieInfo)
+                .exchange()
+                .expectStatus()
+                .isNotFound();
 
         //then
     }
