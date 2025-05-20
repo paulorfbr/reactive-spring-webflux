@@ -111,7 +111,7 @@ public class MoviesInfoControllerUnitTest {
 
         //given
         var invalidMovieInfo = new MovieInfo(null, null,
-                -2005, List.of("Christian Bale", "Michael Cane"), LocalDate.parse("2005-06-15"));
+                -2005, List.of(""), LocalDate.parse("2005-06-15"));
 
         //when
         webTestClient
@@ -125,7 +125,7 @@ public class MoviesInfoControllerUnitTest {
                 .consumeWith(movieInfoEntityExchangeResult -> {
                     var responseBody = movieInfoEntityExchangeResult.getResponseBody();
                     System.out.println(responseBody);
-                    var expectedErrorMessage = "movieInfo.movieName must be present,movieInfo.year must be positive value";
+                    var expectedErrorMessage = "movieInfo.cast must be present,movieInfo.movieName must be present,movieInfo.year must be positive value";
                     assertEquals(expectedErrorMessage, responseBody);
                 });
     }
