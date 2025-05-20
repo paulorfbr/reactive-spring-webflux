@@ -54,6 +54,21 @@ class MovieInfoRepositoryIntgTest {
     }
 
     @Test
+    void findByYear(){
+        //given
+
+        //when
+        var movieInfoFlux = movieInfoRepository.findByYear(2008).log();
+
+        //then
+        StepVerifier.create(movieInfoFlux)
+                .assertNext(movieInfo -> {
+                    assertEquals("The Dark Knight", movieInfo.getMovieName());
+                })
+                .verifyComplete();
+    }
+
+    @Test
     void findById(){
         //given
 
