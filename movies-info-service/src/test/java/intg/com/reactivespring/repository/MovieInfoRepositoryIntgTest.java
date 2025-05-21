@@ -69,6 +69,22 @@ class MovieInfoRepositoryIntgTest {
     }
 
     @Test
+    void findByName(){
+        //given
+
+        //when
+        String movieName = "Batman Begins";
+        var movieInfoMono = movieInfoRepository.findByMovieName(movieName).log();
+
+        //then
+        StepVerifier.create(movieInfoMono)
+                .assertNext(movieInfo -> {
+                    assertEquals(movieName, movieInfo.getMovieName());
+                })
+                .verifyComplete();
+    }
+
+    @Test
     void findById(){
         //given
 

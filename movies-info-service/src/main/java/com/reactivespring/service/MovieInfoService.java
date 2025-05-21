@@ -42,4 +42,8 @@ public class MovieInfoService {
     public Flux<MovieInfo> getMovieInfoByYear(Integer year) {
         return movieInfoRepository.findByYear(year);
     }
+
+    public Mono<MovieInfo> getMovieInfoByMovieName(String movieName) {
+        return movieInfoRepository.findByMovieName(movieName);
+    }
 }
