@@ -17,10 +17,11 @@ import javax.validation.Valid;
 @Slf4j
 public class MoviesInfoController {
 
+    public static final String MOVIEINFOS = "movieinfos";
     @Autowired
     private MovieInfoService movieInfoService;
 
-    @GetMapping("/movieinfos")
+    @GetMapping("/" + MOVIEINFOS)
     public Flux<MovieInfo> getAllMovieInfos(@RequestParam(value = "year", required = false) Integer year){
         log.info("year is :{}", year);
         if (year!=null){
@@ -29,7 +30,7 @@ public class MoviesInfoController {
         return movieInfoService.getAllMovieInfos().log();
     }
 
-    @GetMapping("/movieinfos/{id}")
+    @GetMapping("/" + MOVIEINFOS + "/{id}")
     public Mono<ResponseEntity<MovieInfo>> getMovieInfoById(@PathVariable String id){
         return movieInfoService.getMovieInfoById(id)
                 .map(ResponseEntity.ok()::body)
@@ -37,13 +38,13 @@ public class MoviesInfoController {
                 .log();
     }
 
-    @PostMapping("/movieinfos")
+    @PostMapping("/" + MOVIEINFOS)
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<MovieInfo> addMovieInfo(@RequestBody @Valid MovieInfo movieInfo){
         return movieInfoService.addMovieInfo(movieInfo);
     }
 
-    @PutMapping("/movieinfos/{id}")
+    @PutMapping("/" + MOVIEINFOS + "/{id}")
     public Mono<ResponseEntity<MovieInfo>> updateMovieInfo(@PathVariable String id, @RequestBody @Valid MovieInfo movieInfo){
         return movieInfoService.updateMovieInfo(id, movieInfo)
                 .map(ResponseEntity.ok()::body)
@@ -51,7 +52,7 @@ public class MoviesInfoController {
                 .log();
     }
 
-    @DeleteMapping("/movieinfos/{id}")
+    @DeleteMapping("/" + MOVIEINFOS + "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public Mono<Void> deleteMovieInfo(@PathVariable String id){
         return movieInfoService.deleteMovieInfo(id).log();
