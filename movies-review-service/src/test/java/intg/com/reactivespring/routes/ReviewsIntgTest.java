@@ -47,7 +47,7 @@ public class ReviewsIntgTest {
     @Test
     void addMovieInfo() {
         //given
-        var movieReview = new Review();
+        var movieReview = new Review(null, 1L, "Nice movie", 7.5);
 
         //when
         webTestClient
