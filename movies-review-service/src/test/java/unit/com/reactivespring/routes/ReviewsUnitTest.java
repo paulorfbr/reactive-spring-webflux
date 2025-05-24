@@ -106,12 +106,11 @@ public class ReviewsUnitTest {
         //when
         String movieReviewId = "abc";
         var movieReview = new Review(null, 1L, "Nice movie", 7.5);
-        var movieReviewMocked = new Review("abc", 1L, "Nice movie", 7.5);
+        var movieReviewMocked = new Review(movieReviewId, 1L, "Nice movie", 7.5);
 
-        when(reviewReactiveRepository.findById(isA(String.class)).thenReturn(
+        when(reviewReactiveRepository.findById(isA(String.class))).thenReturn(
                 Mono.just(movieReviewMocked)
-        ));
-
+        );
 
         webTestClient
                 .put()
